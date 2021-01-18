@@ -1,15 +1,13 @@
 class minBinaryHeap:
     def __init__(self):
         self.heaplist = []
-        self.length = 0
     #main methods
     def add(self, k):
         """
         Inserts a new item into the heap and calls percolateUp to maintain hepa property on insertion
         """
         self.heaplist.append(k)
-        self.length += 1
-        self.percolateUp(self.length-1)
+        self.percolateUp(self.size()-1)
 
     def remove(self):
         """
@@ -19,7 +17,6 @@ class minBinaryHeap:
         """
         self.heaplist[0], self.heaplist[-1] = self.heaplist[-1], self.heaplist[0]
         result = self.heaplist.pop()
-        self.length -= 1
         #percolate after taking out the min value
         self.percolateDown(0)
         return result
@@ -52,7 +49,7 @@ class minBinaryHeap:
         """
         Moves a new item up in order to maintain the heap property
         """
-        while i * 2 + 1 < self.length:
+        while i * 2 + 1 < self.size():
             childToSwap = self.minChild(i) 
             if self.heaplist[i] > self.heaplist[childToSwap]:
                 #swap 
@@ -69,7 +66,7 @@ class minBinaryHeap:
         """
         lChild = i * 2 + 1
         rChild = i * 2 + 2
-        if rChild >= self.length: return lChild
+        if rChild >= self.size(): return lChild
         else:
             if self.heaplist[lChild] < self.heaplist[rChild]: return lChild
             else: return rChild

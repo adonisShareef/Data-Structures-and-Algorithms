@@ -9,7 +9,7 @@ class minBinaryHeap:
         """
         self.heaplist.append(k)
         self.length += 1
-        self.percolateUp(self.length)
+        self.percolateUp(self.length-1)
 
     def remove(self):
         """
@@ -19,6 +19,7 @@ class minBinaryHeap:
         """
         self.heaplist[0], self.heaplist[-1] = self.heaplist[-1], self.heaplist[0]
         result = self.heaplist.pop()
+        self.length -= 1
         #percolate after taking out the min value
         self.percolateDown(0)
         return result
@@ -38,13 +39,14 @@ class minBinaryHeap:
         Moves a new item up in order to maintain the heap property
 
         parent: i - 1 // 2 
+        i = i - 1 becuase zero index
         """
-        while i - 1 // 2 >= 0:
-            if self.heaplist[i] < self.heaplist[i - 1 // 2]:
+        while (i - 1) // 2 >= 0:
+            if self.heaplist[i] < self.heaplist[(i - 1)// 2]:
                 #swap 
-                self.heaplist[i], self.heaplist[i - 1 // 2] = self.heaplist[ i - 1 // 2], self.heaplist[i]
+                self.heaplist[i], self.heaplist[(i - 1) // 2] = self.heaplist[ (i - 1) // 2], self.heaplist[i]
             #now move to the parent position
-            i = i - 1 // 2
+            i = (i - 1) // 2
 
     def percolateDown(self, i):
         """
@@ -67,7 +69,21 @@ class minBinaryHeap:
         """
         lChild = i * 2 + 1
         rChild = i * 2 + 2
-        if rChild > self.length: return lChild
+        if rChild >= self.length: return lChild
         else:
             if self.heaplist[lChild] < self.heaplist[rChild]: return lChild
             else: return rChild
+
+
+def main():
+    heap = minBinaryHeap()
+    heap.add(5)
+    heap.add(2)
+    heap.add(3)
+    print(heap.remove())
+    print(heap.min())
+    print(heap.heaplist)
+   
+
+if __name__ == '__main__':
+    main()
